@@ -61,4 +61,11 @@ size_t strlcpy(char *dest, const char *src, size_t size)
 	}
 	return ret;
 }
+
+void strpadcpy(char *buf, int buf_size, const char *str, char pad)
+{
+    int len = strnlen(str, buf_size);
+    memcpy(buf, str, len);
+    memset(buf + len, pad, buf_size - len);
+}
 #endif

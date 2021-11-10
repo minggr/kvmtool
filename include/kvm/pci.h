@@ -164,6 +164,7 @@ struct pci_device_header {
 	 * edge-triggered INTx# for convenience.
 	 */
 	enum irq_type	irq_type;
+	int magic;
 };
 
 #define PCI_CAP(pci_hdr, pos) ((void *)(pci_hdr) + (pos))

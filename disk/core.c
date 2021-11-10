@@ -32,6 +32,10 @@ int disk_img_name_parser(const struct option *opt, const char *arg, int unset)
 			kvm->cfg.disk_image[kvm->cfg.image_count].tpgt = sep + 1;
 		}
 		cur = sep + 1;
+	} else if (strncmp(arg, "nvme:", 5) == 0) {
+		kvm->cfg.disk_image[kvm->cfg.image_count].nvme = true;
+		sep = strstr(arg, ":");
+		cur = sep + 1;
 	}
 
 	do {
@@ -179,6 +183,9 @@ static struct disk_image **disk_image__open_all(struct kvm *kvm)
 			continue;
 		}
 
+		if (params[i].nvme)
+			filename += strlen("nvme:");
+
 		if (!filename)
 			continue;
 
@@ -189,6 +196,7 @@ static struct disk_image **disk_image__open_all(struct kvm *kvm)
 			goto error;
 		}
 		disks[i]->debug_iodelay = kvm->cfg.debug_iodelay;
+		disks[i]->nvme = params[i].nvme;
 	}
 
 	return disks;

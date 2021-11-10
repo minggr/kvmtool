@@ -19,4 +19,5 @@ static inline const char *skip_prefix(const char *str, const char *prefix)
 	return strncmp(str, prefix, len) ? NULL : str + len;
 }
 
+void strpadcpy(char *buf, int buf_size, const char *str, char pad);
 #endif
